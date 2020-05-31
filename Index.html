@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+   
+    <title> Geolocalizaci&oacute;n  </title>
+       
+        <!-- Script para mostrar las coordenadas-->
+        <script type="text/javascript">
+            if (navigator.geolocation) { //Validar si hay acceso web a la ubicación
+                navigator.geolocation.getCurrentPosition(mostrarUbicacion); //Obtiene la posición
+                } else {
+                alert("¡Error! Este navegador no soporta la Geolocalización.");
+            }
+           
+            //Funcion para obtener latitud y longitud
+            function mostrarUbicacion(position) {
+                var latitud = position.coords.latitude; //Obtener latitud
+                var longitud = position.coords.longitude; //Obtener longitud
+                var div = document.getElementById("coordenadas");
+                //Saca los datos en pantalla de gps localización
+                div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
+            }
+
+           //function to be called when .returnVal() returns
+           var onSuccess = function(str) {
+           alert(str);
+           }
+
+           //use .withSuccessHandler() to set the callback function
+           var str = google.script.run.withSuccessHandler(onSuccess).returnVal()
+
+           function getIP(json) {
+              document.write("Tu ip es: ", json.ip);          
+           }
+       
+        </script>
+       
+        <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+
+    <form>
+    <select name="educacion">
+        <option value="sin-estudios">Sin estudios</option>
+        <option value="educacion-obligatoria" selected="selected">Educación Obligatoria</option>
+        <option value="formacion-profesional">Formación profesional</option>
+        <option value="universidad">Universidad</option>
+    </select> <br>
+
+    <input type="text" name="texto" value = json.ip readonly>
+    <input type="text" name="texto" value = longitud readonly>
+    <input type="text" name="texto" value = latitud readonly>   
+    Nombre de pila: <input id="nombredepila" name="nombredepila" type="text" />
+    <br/>
+    Nombre de familia: <input id="nombredefamilia" name="nombredefamilia" type="text" />
+    <br/>
+    <input onclick="enviarFormulario()" type="button" value="Agregar fila" />
+    </form>
+   
+    <script type="text/javascript">
+    function enviarFormulario() {
+         google.script.run.obtenerValores(document.forms[0]);
+    }
+    </script>
+
+    </head>
+   
+    <body>
+       
+        <!-- División o secciona para mostrar coordenadas -->
+        <div id='coordenadas'></div>
+       
+    </body>
+</html>
